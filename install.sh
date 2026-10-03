@@ -1,6 +1,6 @@
 #!/data/data/com.termux/files/usr/bin/bash
 
-REPO_USER="TERA_GITHUB_USERNAME"
+REPO_USER="vickyop725-hue"
 REPO_NAME="vtx-patcher"
 
 echo "[*] Installing VTX Patcher..."
