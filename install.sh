@@ -15,11 +15,11 @@ pkg install -y python openjdk-21 apksigner zipalign openssl-tool curl
 mkdir -p /sdcard/vtx
 
 echo "[*] Downloading compiled script..."
-# Yahan hum .enc ki jagah binary file (bina extension ke) download kar rahe hain
-curl -sL "https://raw.githubusercontent.com/$REPO_USER/$REPO_NAME/main/vtx_binary" -o /sdcard/vtx/vtx_binary
+# File ko Termux ke internal folder me download kar rahe hain
+curl -sL "https://raw.githubusercontent.com/$REPO_USER/$REPO_NAME/main/vtx_binary" -o /data/data/com.termux/files/home/vtx_binary
 
-if [ -f "/sdcard/vtx/vtx_binary" ]; then
-    chmod +x /sdcard/vtx/vtx_binary
+if [ -f "/data/data/com.termux/files/home/vtx_binary" ]; then
+    chmod +x /data/data/com.termux/files/home/vtx_binary
     echo "[✓] Binary downloaded and ready!"
 else
     echo "[!] Download failed."
@@ -30,7 +30,7 @@ fi
 echo "[*] Creating launcher..."
 cat > /data/data/com.termux/files/usr/bin/vtxpatcher << 'EOF'
 #!/data/data/com.termux/files/usr/bin/bash
-/sdcard/vtx/vtx_binary
+/data/data/com.termux/files/home/vtx_binary
 EOF
 
 chmod +x /data/data/com.termux/files/usr/bin/vtxpatcher
