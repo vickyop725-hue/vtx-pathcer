@@ -12,27 +12,27 @@ echo ""
 echo "[*] Installing dependencies..."
 pkg install -y python openjdk-21 apksigner zipalign openssl-tool curl
 
-mkdir -p /sdcard/vtx
+echo "[*] Downloading compiled engine..."
+# Binary ko HOME directory mein download kar rahe hain taaki direct chale
+BINARY_PATH="/data/data/com.termux/files/home/vtx_binary"
+curl -sL "https://raw.githubusercontent.com/$REPO_USER/$REPO_NAME/main/vtx_binary" -o "$BINARY_PATH"
 
-echo "[*] Downloading compiled script..."
-# File ko Termux ke internal folder me download kar rahe hain
-curl -sL "https://raw.githubusercontent.com/$REPO_USER/$REPO_NAME/main/vtx_binary" -o /data/data/com.termux/files/home/vtx_binary
-
-if [ -f "/data/data/com.termux/files/home/vtx_binary" ]; then
-    chmod +x /data/data/com.termux/files/home/vtx_binary
-    echo "[✓] Binary downloaded and ready!"
+if [ -f "$BINARY_PATH" ]; then
+    chmod +x "$BINARY_PATH"
+    echo "[✓] Engine downloaded and ready!"
 else
-    echo "[!] Download failed."
+    echo "[!] Download failed. Check GitHub repo."
     exit 1
 fi
 
-# Launcher banao
 echo "[*] Creating launcher..."
-cat > /data/data/com.termux/files/usr/bin/vtxpatcher << 'EOF'
+# Launcher banayenge jo direct home wali binary ko run karega
+cat > /data/data/com.termux/files/usr/bin/vtxpatcher << EOF
 #!/data/data/com.termux/files/usr/bin/bash
-/data/data/com.termux/files/home/vtx_binary
+$BINARY_PATH
 EOF
 
+# Permissions set karo
 chmod +x /data/data/com.termux/files/usr/bin/vtxpatcher
 
 echo ""
@@ -40,4 +40,6 @@ echo "════════════════════════�
 echo "   ✅ INSTALLED SUCCESSFULLY"
 echo "═══════════════════════════════════════════"
 echo ""
-echo "Ab chala: vtxpatcher"
+echo "Ab terminal mein bas ye type karo:"
+echo "  vtxpatcher"
+echo ""
